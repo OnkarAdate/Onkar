@@ -59,7 +59,7 @@ const readData = async()=>
 {
     try{
         const result=await Member.find({Age:35});
-console.log(result);
+        console.log(result);
 
     }catch(err){ console.log(err.massage);}
 }
