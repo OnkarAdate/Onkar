@@ -36,7 +36,7 @@ const createMemberData = async( ) => {
             {
             Name : "Kajal Adate",
             Age : 25,
-           Mobile: 9503448033,
+           Mobile: 8485041031,
            City : "Sangola"
         })
 
@@ -58,9 +58,52 @@ const createMemberData = async( ) => {
 const readData = async()=>
 {
     try{
-        const result=await Member.find({Age:35});
+        //const result=await Member.find({Age:{$gt:25}}/*This is Comparison Operator $gt,$gte, $eq,$neq, ETC*/, {_id : 0,Name:1});
+        //const result = await Member.find(  {$nor:[{Age:25},{City:"Sangola"}]  }, {_id:0, Name:1}); // Here $and is used. Logical Operator.
+        
+        const result = await Member.find()
+        .select({_id:0, Name:1,Mobile:1})
+        .sort({Mobile:1}); // CountDocuments and Sort function used.
+        
         console.log(result);
 
     }catch(err){ console.log(err.massage);}
 }
-readData();
+//readData();
+
+const UpdateDocument= async(_id)=>
+{
+    try {
+        
+        const uData = await Member.findByIdAndUpdate({_id},{
+            $set: {
+                Mobile:9503490157
+            }
+        }, {new:true});
+
+        console.log(uData);
+
+    } catch (err) {
+        console.log(err.massage);
+    }
+    
+}
+
+//UpdateDocument("655f6cb41d1be7d7938461a9");
+
+
+const DeleteDoc = async({id})=>
+{
+    try {
+        const data = await Member.deleteOne(({id}));
+        console.log(data);
+        
+    } catch (err) {
+
+        console.log(err.massage);
+        
+    }
+
+}
+
+DeleteDoc("655f6d49a6cde0166babe591");
